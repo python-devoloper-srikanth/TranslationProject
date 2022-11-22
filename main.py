@@ -25,10 +25,10 @@ def main(translation_data_input_file_name: str, window_size: int):
     df_translation_data = df_translation_data[['timestamp', 'duration']]
 
     # process the data in dataframe and calculate the moving average
-    df_date_movingaverage = calculate_moving_average(df_translation_data, window_size)
+    list_date_movingaverage = calculate_moving_average(df_translation_data, window_size)
 
     # print on console
-    print(df_date_movingaverage)
+    [print(dict_date_movingaverage) for dict_date_movingaverage in list_date_movingaverage]
 
 
 def input_validation(translation_data_input_file_name: str, window_size: int):
@@ -63,15 +63,14 @@ def calculate_moving_average(df_translation_data: pd.DataFrame, window_size: int
     this method calculates the moving average for every minute from start to end timestamp
     :param df_translation_data:
     :param window_size:
-    :return: data frame with moving average
+    :return: list of dictioneries with date and moving average
     '''
     # get start_date_time and end_date_time from dataframe
     # get rid of seconds and milli seconds
     start_date_time = df_translation_data['timestamp'].min().replace(second=0, microsecond=0)
     end_date_time = df_translation_data['timestamp'].max().replace(second=0, microsecond=0) + timedelta(minutes=1)
 
-    list_date_times_with_one_minute_interval = []
-    list_moving_average_for_each_date_time = []
+    list_date_movingaverage = []
 
     # loop through start date time to end date time
     # for every minute(from start_date_time to end_date_time)
@@ -90,18 +89,15 @@ def calculate_moving_average(df_translation_data: pd.DataFrame, window_size: int
         # calculate average
         average = sum(list_duration) / len(list_duration) if list_duration else 0
 
-        list_date_times_with_one_minute_interval.append(start_date_time)
-        list_moving_average_for_each_date_time.append(average)
+        dict_date_movingaverage = {}
+        dict_date_movingaverage['date'] = start_date_time.strftime('%Y-%m-%d %H:%M:%S')
+        dict_date_movingaverage['average_delivery_time'] = average
+        list_date_movingaverage.append(dict_date_movingaverage)
 
         # increase a minute and update start_date_time
         start_date_time = start_date_time + timedelta(minutes=1)
 
-    # prepare dataframe with the processed data
-    df_date_movingaverage = \
-        pd.DataFrame(list(zip(list_date_times_with_one_minute_interval, list_moving_average_for_each_date_time)),
-                     columns=['date', 'average_delivery_time'])
-
-    return df_date_movingaverage
+    return list_date_movingaverage
 
 
 if __name__ == "__main__":

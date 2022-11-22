@@ -1,3 +1,26 @@
+# Please follow the below steps to clone and execute
+
+1. Clone from my github - use the below command
+
+   **git clone https://github.com/python-devoloper-srikanth/TranslationProject.git**
+
+2. Set up environment (Pycharm or VS code or python idle)
+
+    Load the project folder (back-engineering-challenge) 
+    Create a virtual environment
+    Install packages which are there in requirements.txt 
+    
+    **pip install -r requirements.txt**
+
+4. run the below cli command
+
+    **python main.py "translation_input_data.json" 10**
+
+5. Prints the output on the console
+
+
+
+
 # Backend Engineering Challenge
 
 
