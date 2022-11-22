@@ -6,7 +6,7 @@
 
 2. Set up environment (Pycharm or VS code or python idle)
 
-    Load the project folder (back-engineering-challenge) 
+    Load the project folder (TranslationProject) 
     Create a virtual environment
     Install packages which are there in requirements.txt 
     
